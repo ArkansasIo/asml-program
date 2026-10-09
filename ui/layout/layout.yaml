@@ -1,0 +1,20 @@
+layout:
+  name: command-center
+  topbar_height: 54
+  sidebar_width: 260
+  inspector_width: 320
+  panels:
+    - machine_control
+    - stage
+    - optics
+    - alignment
+    - exposure
+    - wafer
+    - metrology
+    - alarms
+    - telemetry_graphs
+    - mathematics_calculators
+    - chip_lab
+    - plugins
+    - maintenance
+    - keyboard_mouse_bindings
