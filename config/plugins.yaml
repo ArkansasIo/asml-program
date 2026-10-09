@@ -1,0 +1,6 @@
+plugins:
+  simulator:
+    enabled: true
+  physical_hardware:
+    enabled: false
+    require_signed_plugin: true
