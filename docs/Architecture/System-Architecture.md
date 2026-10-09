@@ -1,0 +1,1 @@
+# System architecture\nWindows UI -> application services -> core domain -> virtual simulator or authorized hardware plugin. Telemetry and audit data flow to graphing and database persistence. Simulation is the default.
