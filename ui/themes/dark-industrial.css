@@ -1,0 +1,2 @@
+:root{--accent:#50b9ed;--good:#55cf96;--warning:#e7b65f;--danger:#e56a75}
+.lcs-topbar,.lcs-sidebar,.lcs-inspector,.lcs-statusbar{background:var(--panel)}
