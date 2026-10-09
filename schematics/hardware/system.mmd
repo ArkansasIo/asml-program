@@ -1,0 +1,9 @@
+flowchart TB
+ UPS[Power / UPS] --> PC[Windows Control Workstation]
+ PC --> HAL[Hardware Abstraction Layer]
+ HAL --> SIM[Virtual Machine Simulator]
+ HAL --> ADAPTER[Authorized Vendor Adapter Plugin]
+ ADAPTER --> CTRL[Vendor Machine Controller]
+ CTRL --> STAGE[Stage / Motion]
+ CTRL --> OPTICS[Optics / Exposure]
+ CTRL --> SENSORS[Sensors / Metrology]
