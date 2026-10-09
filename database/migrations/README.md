@@ -1,0 +1,1 @@
+# Database migrations\nKeep schema changes ordered and versioned; record applied versions and test rollback/recovery.
