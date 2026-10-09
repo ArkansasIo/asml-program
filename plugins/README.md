@@ -1,0 +1,1 @@
+# Plugin system\nThe simulator is default. Physical adapters must be signed, authorized, compatible and use documented vendor interfaces while preserving native interlocks.
