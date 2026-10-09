@@ -1,0 +1,4 @@
+machine:
+  backend: virtual
+  physical_control_enabled: false
+  telemetry_rate_hz: 20
