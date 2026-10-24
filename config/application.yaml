@@ -1,4 +1,10 @@
 application:
   name: LithographyControlStudio
-  version: 0.1.0
+  version: 0.2.0
   mode: simulation
+  telemetry_rate_hz: 20
+  logging_level: info
+safety:
+  physical_control_enabled: false
+  require_authorized_plugin: true
+  require_interlocks: true
