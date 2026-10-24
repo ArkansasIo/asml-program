@@ -1,6 +1,9 @@
 database:
   provider: mysql
-  host: 127.0.0.1
-  port: 3306
-  schema: lithography_control
-  credentials_source: environment
+  host: ${LCS_DB_HOST:127.0.0.1}
+  port: ${LCS_DB_PORT:3306}
+  schema: ${LCS_DB_NAME:lithography_control}
+  username: ${LCS_DB_USER:lcs_app}
+  password_source: environment
+  password_environment_variable: LCS_DB_PASSWORD
+  tls_required: false
