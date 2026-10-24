@@ -1,0 +1,15 @@
+build/
+build-*/
+out/
+.vscode/
+.idea/
+*.user
+*.suo
+*.vcxproj.user
+CMakeUserPresets.json
+.env
+.env.*
+!.env.example
+*.log
+*.dmp
+.DS_Store
