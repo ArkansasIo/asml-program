@@ -1,28 +1,31 @@
-# Lithography Control Studio — C++23 Foundation
+# Lithography Control Studio
 
-Windows-first desktop engineering and simulation project.
+Simulation-first C++23 engineering foundation for machine-state modeling, telemetry, alarms, configuration, and future authorized integrations.
 
-## Included in this repository
-- C++23 CMake foundation (CLI and desktop-shell entry points)
-- Virtual machine state model and engineering mathematics starter
-- Configuration files and MySQL schema
-- CSS command-center layout and dark industrial theme
-- UML diagrams and hardware/software schematic sources
-- ChipLab architecture and toolchain design documents
-- Plugin and update/safety design notes
+## Safety boundary
 
-## Build on Windows
-Install Visual Studio 2022 with the C++ desktop workload, CMake 3.25+, and Ninja.
+This repository does not implement production lithography equipment control, interlock bypasses, or vendor-protocol commands. The default backend is a virtual simulator and physical control is disabled.
 
-```powershell
-cmake --preset windows-msvc-release
-cmake --build build/release
-ctest --test-dir build/release --output-on-failure
-```
+## Build
 
-## Scope and limitations
-This is a starter foundation, not a completed commercial application. The desktop target is currently a console shell; the native GUI, live MySQL connector, production plugin loader, advanced simulator physics, graphing, and ChipLab toolchain require further implementation. The project has not been verified in a Windows build environment.
+Windows: `cmake --preset windows-msvc-release && cmake --build build/release --config Release --parallel && ctest --test-dir build/release -C Release --output-on-failure`
 
-Simulation is the default. Physical equipment adapters must use authorized, documented vendor interfaces and preserve equipment-native safety interlocks.
+Linux/macOS: `cmake -S . -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build --parallel && ctest --test-dir build --output-on-failure`
 
-The downloadable ZIP package was created in the originating ChatGPT conversation; the current GitHub contents API only supports UTF-8 text files, so this README does not pretend the binary ZIP was uploaded.
+## Components
+
+- `lcs_core`: domain, simulation, telemetry, alarms, configuration
+- `lcs_cli`: command-line simulation shell
+- `lcs_desktop`: desktop shell placeholder
+- `database/`: MySQL schema and migrations
+- `config/`: application and simulation configuration
+- `docs/`: architecture and operations documentation
+- `.github/workflows/`: Windows CI
+
+## Database
+
+Copy `.env.example` to `.env`, replace placeholders, then start MySQL with Docker Compose. Never commit `.env`.
+
+## Status
+
+This is an engineering foundation. Native GUI, production-grade database adapter, plugin ABI, and validated physical integrations remain future work.
