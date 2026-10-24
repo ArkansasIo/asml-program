@@ -2,3 +2,7 @@ machine:
   backend: virtual
   physical_control_enabled: false
   telemetry_rate_hz: 20
+  simulation:
+    deterministic: true
+    default_temperature_k: 293.15
+    default_pressure_pa: 101325.0
