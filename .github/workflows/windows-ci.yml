@@ -1,0 +1,33 @@
+name: Windows C++ CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up MSVC developer environment
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Verify CMake
+        run: cmake --version
+
+      - name: Configure
+        run: cmake --preset windows-msvc-release
+
+      - name: Build
+        run: cmake --build build/release --config Release --parallel
+
+      - name: Test
+        run: ctest --test-dir build/release -C Release --output-on-failure
