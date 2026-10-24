@@ -1,10 +1,14 @@
 #include <cassert>
 #include <cmath>
 #include "lcs/AlarmManager.hpp"
+#include "lcs/Math.hpp"
 #include "lcs/SimulationEngine.hpp"
 #include "lcs/Telemetry.hpp"
 #include "lcs/Types.hpp"
 #include "lcs/VirtualMachine.hpp"
+
+void runSimulationModelTests();
+
 int main(){
  assert(std::abs(lcs::math::magnitude({3,4,0})-5.0)<1e-9);
  assert(lcs::math::clamp(5.0,0.0,4.0)==4.0);
@@ -14,5 +18,6 @@ int main(){
  lcs::telemetry::Buffer buffer(2); assert(buffer.push({1,10.0,"Pa"})); assert(buffer.push({1,11.0,"Pa"})); assert(!buffer.push({1,12.0,"Pa"})); assert(buffer.drain().size()==2);
  lcs::alarms::Manager alarms; alarms.raise("SIM.TEST",lcs::core::Severity::Critical,"Test alarm"); assert(alarms.hasCritical()); alarms.clear("SIM.TEST"); assert(!alarms.hasCritical());
  assert(lcs::core::isValidEnvironment({293.15,101325.0})); assert(!lcs::core::isValidEnvironment({-1.0,101325.0}));
+ runSimulationModelTests();
  return 0;
 }
