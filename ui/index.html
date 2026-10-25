@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lithography Control Studio</title>
+<link rel="stylesheet" href="/layout.css">
+<link rel="stylesheet" href="/dark-industrial.css">
+</head>
+<body>
+<div class="lcs-shell">
+  <header class="lcs-topbar">
+    <strong>Lithography Control Studio</strong>
+    <span style="margin-left:16px;color:var(--muted)">simulation backend &mdash; physical control disabled</span>
+    <span id="conn" style="margin-left:auto;color:var(--muted)">connecting&hellip;</span>
+  </header>
+
+  <nav class="lcs-sidebar">
+    <div class="lcs-panel">
+      <h3>Machine</h3>
+      <div class="lcs-grid">
+        <button class="lcs-control" data-cmd="init">Init</button>
+        <button class="lcs-control" data-cmd="start">Start</button>
+        <button class="lcs-control" data-cmd="pause">Pause</button>
+        <button class="lcs-control" data-cmd="stop">Stop</button>
+      </div>
+    </div>
+    <div class="lcs-panel">
+      <h3>Stage Move (mm)</h3>
+      <div class="lcs-grid">
+        <input class="lcs-control" id="mx" type="number" step="0.001" placeholder="x">
+        <input class="lcs-control" id="my" type="number" step="0.001" placeholder="y">
+        <input class="lcs-control" id="mz" type="number" step="0.001" placeholder="z">
+        <button class="lcs-control" id="moveBtn">Move</button>
+      </div>
+    </div>
+    <div class="lcs-panel">
+      <h3>Vector Magnitude</h3>
+      <div class="lcs-grid">
+        <input class="lcs-control" id="gx" type="number" placeholder="x">
+        <input class="lcs-control" id="gy" type="number" placeholder="y">
+        <input class="lcs-control" id="gz" type="number" placeholder="z">
+        <button class="lcs-control" id="magBtn">Compute</button>
+        <output id="magOut" class="lcs-control">&mdash;</output>
+      </div>
+    </div>
+  </nav>
+
+  <main class="lcs-main">
+    <div class="lcs-grid lcs-grid-3">
+      <div class="lcs-panel">
+        <h3>State</h3>
+        <div id="state" class="lcs-control" style="font-size:20px">&mdash;</div>
+      </div>
+      <div class="lcs-panel">
+        <h3>Position (mm)</h3>
+        <div id="pos" class="lcs-control" style="font-size:18px">&mdash;</div>
+      </div>
+      <div class="lcs-panel">
+        <h3>Environment</h3>
+        <div id="env" class="lcs-control" style="font-size:14px">&mdash;</div>
+      </div>
+    </div>
+    <div class="lcs-panel" style="margin-top:var(--gap)">
+      <h3>Control Planes</h3>
+      <div class="lcs-grid lcs-grid-3">
+        <div class="lcs-panel">
+          <h4>Safety Interlocks</h4>
+          <div id="safety" class="lcs-control" style="font-size:14px">&mdash;</div>
+          <div id="safetyFailures" style="color:var(--danger);font-size:12px;margin-top:4px"></div>
+        </div>
+        <div class="lcs-panel">
+          <h4>Optics</h4>
+          <div id="optics" class="lcs-control" style="font-size:13px">&mdash;</div>
+          <div class="lcs-grid" style="margin-top:6px">
+            <input class="lcs-control" id="oWl" type="number" placeholder="wavelength nm">
+            <input class="lcs-control" id="oNa" type="number" step="0.01" placeholder="NA">
+            <input class="lcs-control" id="oRed" type="number" placeholder="reduction">
+            <button class="lcs-control" id="opticsBtn">Apply</button>
+          </div>
+        </div>
+        <div class="lcs-panel">
+          <h4>Alarms</h4>
+          <div id="alarms" class="lcs-control" style="font-size:13px;white-space:pre-wrap;min-height:60px">&mdash;</div>
+          <div class="lcs-grid" style="margin-top:6px">
+            <input class="lcs-control" id="aCode" placeholder="code">
+            <select class="lcs-control" id="aSev"><option>info</option><option>warning</option><option>critical</option></select>
+            <input class="lcs-control" id="aMsg" placeholder="message">
+            <button class="lcs-control" id="raiseBtn">Raise</button>
+            <button class="lcs-control" id="clearBtn">Clear</button>
+          </div>
+        </div>
+        <div class="lcs-panel">
+          <h4>Telemetry</h4>
+          <div class="lcs-grid">
+            <input class="lcs-control" id="tSensor" type="number" placeholder="sensor id">
+            <input class="lcs-control" id="tValue" type="number" placeholder="value">
+            <input class="lcs-control" id="tUnit" placeholder="unit">
+            <button class="lcs-control" id="pushBtn">Push</button>
+            <button class="lcs-control" id="drainBtn">Drain</button>
+          </div>
+        </div>
+        <div class="lcs-panel">
+          <h4>Jobs</h4>
+          <div class="lcs-grid">
+            <input class="lcs-control" id="jId" placeholder="job id">
+            <button class="lcs-control" id="jCreate">Create</button>
+            <button class="lcs-control" id="jValidate">Validate</button>
+            <button class="lcs-control" id="jStart">Start</button>
+            <button class="lcs-control" id="jComplete">Complete</button>
+          </div>
+        </div>
+        <div class="lcs-panel">
+          <h4>Audit Trail</h4>
+          <pre id="audit" class="lcs-control" style="font-size:11px;white-space:pre-wrap;max-height:180px;overflow:auto">&mdash;</pre>
+        </div>
+      </div>
+    </div>
+    <div class="lcs-panel" style="margin-top:var(--gap)">
+      <h3>Events</h3>
+      <pre id="log" class="lcs-control" style="min-height:140px;white-space:pre-wrap"></pre>
+    </div>
+  </main>
+
+  <aside class="lcs-inspector">
+    <div class="lcs-panel">
+      <h3>API</h3>
+      <ul style="color:var(--muted);line-height:1.7;font-size:13px">
+        <li>GET /api/state</li>
+        <li>POST /api/init</li>
+        <li>POST /api/start</li>
+        <li>POST /api/pause</li>
+        <li>POST /api/stop</li>
+        <li>POST /api/move</li>
+        <li>GET /api/math/mag?x=&amp;y=&amp;z=</li>
+      </ul>
+    </div>
+  </aside>
+
+  <footer class="lcs-statusbar">LCS 0.3.0 &middot; UI shell &middot; <span id="tick"></span></footer>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
