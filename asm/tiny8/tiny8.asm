@@ -212,7 +212,7 @@ _start:
 .jz:
     call .fetch_byte
     cmp byte [zero_flag], 0
-    jne .cpu_loop
+    je .cpu_loop
     mov [pc], al
     jmp .cpu_loop
 
